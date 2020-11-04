@@ -1,5 +1,6 @@
 #include <asio.hpp>
 #include <iostream>
+#include <fstream>
 #include "../include/sender.hpp"
 
 using asio::ip::tcp;
@@ -19,23 +20,46 @@ int main() {
 
   // As an example, you could start by requesting the first 10 messages
   int32_t curr_msg = 0;
-  for (int i = 0; i < 10; i++) {
-    sender.request_msg(i);
-    curr_msg++;
-  }
+  int32_t minMsg = 0;
+  int32_t maxMsg = 10;
+  std::string poemLines[852];
 
-  while (true) {
-    if (sender.data_ready()) {
-      // Get a response Msg:
-      // A Msg has a msg_id (corresponds to id in request_msg) and
-      // a char array of CHUNK_SIZE (128) storing the data
-      auto msg = sender.get_msg();
+  std::ofstream file;
+  file.open("poem.txt");
 
-      // Eventually, you will combine these chunks to write the file
-      auto data_str = std::string(msg.data.data(), CHUNK_SIZE);
+  while(maxMsg <= 852){
+    for (int i = minMsg; i < maxMsg; i++) {
+      sender.request_msg(i);
+    }
 
-      // Print the msg id and message recieved (may be out of order)
-      std::cout << "msg_id(" << msg.msg_id << ")::" << data_str << std::endl;
+    while (true) {
+      if (sender.data_ready()) {
+        // Get a response Msg:
+        // A Msg has a msg_id (corresponds to id in request_msg) and
+        // a char array of CHUNK_SIZE (128) storing the data
+        auto msg = sender.get_msg();
+
+        if(msg.msg_id == curr_msg){
+          // Eventually, you will combine these chunks to write the file
+          auto data_str = std::string(msg.data.data(), CHUNK_SIZE);
+          file << data_str << std::endl;
+
+          // Print the msg id and message recieved (may be out of order)
+          std::cout << "msg_id(" << msg.msg_id << ")::" << data_str << std::endl;
+
+          curr_msg++;
+        }
+      }
+      else{
+        minMsg = curr_msg;
+
+        if(minMsg + 10 > 852){
+          maxMsg = 852;
+        }
+        else{
+          maxMsg += 10;
+        }
+      }
     }
   }
 
