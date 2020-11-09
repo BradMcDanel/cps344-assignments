@@ -122,7 +122,7 @@ void handle_request(tcp::acceptor& acceptor,
 int main(int argc, char* argv[]) {
   asio::io_context io_context;
   tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 3000));
-  auto msgs = load_data("../data/gilgamesh.txt");
+  auto msgs = load_data("C:\\Users\\juanh\\OneDrive\\Desktop\\Code\\networking\\cps373-assignments\\03-reliable\\data\\gilgamesh.txt");
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == std::string("--no-packet-drops")) {
