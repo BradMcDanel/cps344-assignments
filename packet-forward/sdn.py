@@ -67,9 +67,14 @@ def get_packet_route(packet, network_map, max_hops=8):
 def match_dst_port_22(packet):
     return packet.dst_port == '22'
 
+def match_dst_port_80(packet):
+    return packet.dst_port == '80'
+
+def match_dst_ip_0000(packet):
+    return packet.dst_ip == '0000'
+
 def match_dst_ip_0001(packet):
     return packet.dst_ip == '0001'
-
 
 if __name__=='__main__':
     # network map for first network example
@@ -96,7 +101,7 @@ if __name__=='__main__':
 
     # SSH packets get special treatment
     p5 = Packet('0000', '0010', '12314', '22')
-    p6 = Packet('0000', '0010', '12314', '22')
+    p6 = Packet('0010', '0000', '22', '12314')
 
     packets = [p1, p2, p3, p4, p5, p6]
     for packet in packets:
