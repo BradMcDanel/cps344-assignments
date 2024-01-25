@@ -1,4 +1,4 @@
-# CPS344 Assignments - Whimsi Browser
+# Assignment 1 - Whimsi Browser
 
 ## Getting Started
 
