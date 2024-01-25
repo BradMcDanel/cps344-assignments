@@ -1,6 +1,8 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
+# NOTE: You do not need to modify this file!
+
 class WhimsiRenderer:
     def __init__(self):
         self.root = tk.Tk()

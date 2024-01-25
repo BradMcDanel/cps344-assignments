@@ -1,5 +1,5 @@
 import socket
-import random
+import sys
 
 from whimsi_renderer import WhimsiRenderer
 
@@ -23,6 +23,12 @@ def send_request_to_server(request, host="localhost", port=53009):
 # (2) Instead of loading files from the local file system, load them from the server
 if __name__ == "__main__":
     whimsi = WhimsiRenderer()
+    if len(sys.argv) < 2:
+        print("Usage: python3 whimsi_client.py <route (e.g, localhost/hello.whimsi)>")
+        sys.exit(1)
+    
+    route = sys.argv[1]
+    host, file_path = route.split("/")
 
     def on_click(file_path):
         # Example: Print the clicked file path
@@ -31,7 +37,7 @@ if __name__ == "__main__":
         # Here is an example of loading cats which you should replace
         whimsi.clear()
         for i in range(10):
-            whimsi.draw_cat(random.randint(0, 800), random.randint(0, 600), random.randint(50, 200))
+            whimsi.draw_cat(10 + i * 100, 20 + i * 50, 200)
 
     for i in range(10):
         whimsi.draw_text(10 + i * 10, 10 + i * 20, "Hello World!", 20, "black")
