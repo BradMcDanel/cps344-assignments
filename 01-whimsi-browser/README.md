@@ -28,4 +28,6 @@ You should see a window pop up displaying the client interface. Check the server
 
 If you encounter any package errors, try installing the required package using `pip`.
 
+Check out the `whimsi/` folder for more examples.
+
 Now that the setup is complete, you can proceed with the assignment tasks.
