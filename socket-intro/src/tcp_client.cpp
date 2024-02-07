@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   asio::error_code error;
   std::array<uint32_t, 1> send;
   std::array<uint32_t, 1> recv;
-  for (int i = 0; i < 1024; ++i) {
+  for (int i = 0; i < 8; ++i) {
     tcp::resolver::results_type endpoints = resolver.resolve(host, "3000");
     asio::connect(socket, endpoints);
     send[0] = i;
