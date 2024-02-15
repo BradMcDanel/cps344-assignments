@@ -9,6 +9,9 @@ Before diving into the tasks, ensure you have the client and server code up and 
 - Clone the repository using Git:
   `git clone https://github.com/BradMcDanel/cps344-assignments.git`
 
+### Install Dependencies
+- You may need to install pillow to get the client to run. You can do so by typing `python -m pip install pillow`. If you run into issues with this, please let me know!
+
 ### Starting the Server
 - Navigate to the `01-whimsi-browser` directory: 
   `cd cps344-assignments/01-whimsi-browser`
@@ -22,7 +25,7 @@ Before diving into the tasks, ensure you have the client and server code up and 
 - Navigate to the `client/` directory:
   `cd ../client`
 - Run the Whimsi client:
-  `python whimsi_client.py`
+  `python whimsi_client.py 127.0.0.1/hello.whimsi`
 
 You should see a window pop up displaying the client interface. Check the server terminal for a confirmation message (`('127.0.0.1', port) - HELLO`) each time you start the client. This indicates successful communication between the client and server.
 
