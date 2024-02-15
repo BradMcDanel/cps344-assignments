@@ -23,7 +23,7 @@ Take a look at include/bakery.hpp and src/bakery.cpp to get a sense of what chan
 
 Since this is a client-server application, running `make` will generate two programs: `client` and `server`. Try starting the server in one terminal `./server` and then running the client in another terminal `./client`. Make sure that you start the server first, as otherwise the client will complain about there not being a server.
 
-Take a look at src/client.cpp and https://github.com/BradMcDanel/cps373-assignments/blob/main/02-sockets/src/server.cpp for an example of how to send messages using sockets. After checking the you can run these files, start figuring out how to implement the message format for this protocol as laid out in the assignment pdf.
+Take a look at src/client.cpp and server.cpp for an example of how to send messages using sockets. After checking the you can run these files, start figuring out how to implement the message format for this protocol as laid out in the assignment pdf.
 
 
 Note that for this assignment we are running everything locally (both client and server are running on the same computer). However, the code we write for this assignment should work over the internet!
