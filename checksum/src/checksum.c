@@ -2,24 +2,12 @@
 #include "stdio.h"
 
 uint16_t compute_checksum(uint8_t *udp_packet, uint32_t len) {
-  // Note that the actual checksum used in the RFC is different (needs IP
-  // header). Here, we use the checksum of UDP header + data only.
   uint32_t sum = 0;
-  uint16_t *p = (uint16_t *)udp_packet;
 
-  // Sum all 16-bit bytes in the data using ones-complement addition
-  for (uint32_t i = 0; i < len - 2; i += 2) {
-    // (skip the checksum field, the 6th and 7th byte).
-    if (i == 6) {
-      p += 2;
-    }
-    sum += *p++;
+  for (uint32_t i = 0; i < len; i++) {
+    sum += udp_packet[i];
   }
 
-  sum = (sum & 0xffff);
-
-  // Invert the sum
-  sum = ~sum;
   return sum;
 }
 
@@ -48,7 +36,6 @@ int main(void) {
 
   // Now, we could send it!
   printf("Checksum: %u\n", checksum);
-  printf("Checksum: %u\n", checksum2);
 
   // Print data portion as char*
   printf("Data: ");
