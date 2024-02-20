@@ -16,15 +16,7 @@ uint16_t compute_checksum(uint8_t *udp_packet, uint32_t len) {
     sum += *p++;
   }
 
-  // Add the last byte if it is odd
-  if (len % 2) {
-    sum += *p;
-  }
-
-  // Add the carry bits
-  while (sum >> 16) {
-    sum = (sum & 0xffff) + (sum >> 16);
-  }
+  sum = (sum & 0xffff);
 
   // Invert the sum
   sum = ~sum;
@@ -48,6 +40,7 @@ int main(void) {
                             0x53, 0x33, 0x34, 0x34, 0x21};
 
   uint16_t checksum = compute_checksum(udp_packet, 21);
+  uint16_t checksum2 = compute_checksum(udp_packet, 21);
 
   // Add the checksum to the udp_packet
   udp_packet[6] = (checksum >> 8) & 0xff;
@@ -55,6 +48,7 @@ int main(void) {
 
   // Now, we could send it!
   printf("Checksum: %u\n", checksum);
+  printf("Checksum: %u\n", checksum2);
 
   // Print data portion as char*
   printf("Data: ");
