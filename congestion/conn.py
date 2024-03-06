@@ -1,5 +1,3 @@
-# simulates one side of tcp connection
-# this is used to model congestion (no packet loss)
 import random
 
 class Connection:

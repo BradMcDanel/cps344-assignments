@@ -21,7 +21,11 @@ if __name__=='__main__':
             ack_packets.add(ack)
 
         # print the acks
-        print(acks)
+        if len(acks) > 0:
+            print("ACKs")
+            for ack in acks:
+                print("- " + ack)
+
         print()
 
         # tick simulates one unit of time passing
