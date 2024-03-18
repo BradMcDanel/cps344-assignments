@@ -1,6 +1,6 @@
+#include "../include/sender.hpp"
 #include <asio.hpp>
 #include <iostream>
-#include "../include/sender.hpp"
 
 using asio::ip::tcp;
 
@@ -12,6 +12,7 @@ int main() {
   // data_ready(): returns true if a message is available, otherwise false
   // get_msg(): gets an available message
   // request_msg(id): requests a message at id [0, NUM_MSGS)
+  // Take a look at include/sender.hpp to see other constants
 
   // You will need to make significant modifications to the logic below
   // As a starting point, run the server as follows:
@@ -19,12 +20,13 @@ int main() {
 
   // As an example, you could start by requesting the first 10 messages
   int32_t curr_msg = 0;
+  int32_t num_acks = 0;
   for (int i = 0; i < 10; i++) {
     sender.request_msg(i);
     curr_msg++;
   }
 
-  while (true) {
+  while (num_acks < 10) {
     if (sender.data_ready()) {
       // Get a response Msg:
       // A Msg has a msg_id (corresponds to id in request_msg) and
@@ -36,6 +38,7 @@ int main() {
 
       // Print the msg id and message recieved (may be out of order)
       std::cout << "msg_id(" << msg.msg_id << ")::" << data_str << std::endl;
+      num_acks++;
     }
   }
 
