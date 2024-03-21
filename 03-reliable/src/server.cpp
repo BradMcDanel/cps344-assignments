@@ -7,6 +7,10 @@
 #include <streambuf>
 #include <string>
 #include <thread>
+#include <mutex>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 #include "../include/sender.hpp"
 
 using asio::ip::tcp;
@@ -29,6 +33,17 @@ std::vector<std::string> load_data(std::string filepath) {
     msgs.push_back(s);
   }
   return msgs;
+}
+
+std::string get_timestamp() {
+  auto now = sc::system_clock::now();
+  auto ms = sc::duration_cast<sc::milliseconds>(now.time_since_epoch()) % 1000;
+  auto timer = sc::system_clock::to_time_t(now);
+  std::tm bt = *std::localtime(&timer);
+  std::ostringstream oss;
+  oss << std::put_time(&bt, "%H:%M:%S");
+  oss << '.' << std::setfill('0') << std::setw(3) << ms.count();
+  return oss.str();
 }
 
 void handle_request(tcp::acceptor& acceptor,
@@ -59,20 +74,24 @@ void handle_request(tcp::acceptor& acceptor,
           asio::error_code error;
           std::array<char, CHUNK_SIZE + 2> data;
           std::memcpy(&data[0], &delay.second, sizeof(uint16_t));
-          std::memcpy(&data[2], msgs[delay.second].data(), CHUNK_SIZE);
-          asio::write(socket, asio::buffer(data), error);
-          if (error == asio::error::eof) {
-            goto exit_loop;
+          if (delay.second < msgs.size()) {
+            std::memcpy(&data[2], msgs[delay.second].data(), CHUNK_SIZE);
+            asio::write(socket, asio::buffer(data), error);
+            if (error == asio::error::eof) {
+              goto exit_loop;
+            }
+            std::cout << "[" << get_timestamp() << "] Sent response for message ID:\t" << delay.second << std::endl;
+          } else {
+            std::cout << "[" << get_timestamp() << "] Skipped sending response for invalid message ID:\t" << delay.second << std::endl;
           }
         }
       }
 
-      auto new_end =
-          std::remove_if(delays.begin(), delays.end(),
-                         [&](std::pair<sc::milliseconds, uint16_t> delay) {
-                           return delay.first < curr_time;
-                         });
-      delays.erase(new_end, delays.end());
+      delays.erase(std::remove_if(delays.begin(), delays.end(),
+                                  [&](std::pair<sc::milliseconds, uint16_t> delay) {
+                                    return delay.first < curr_time;
+                                  }),
+                   delays.end());
 
       // no new messages.. sleep a bit and try again
       if (!socket.available()) {
@@ -87,19 +106,24 @@ void handle_request(tcp::acceptor& acceptor,
         goto exit_loop;
       }
 
-      // Invalid msg index
+      // Validate the received message ID
       if (msg_id_buf[0] >= NUM_MSGS) {
+        std::cout << "[" << get_timestamp() << "] Dropped request with invalid message ID:\t" << msg_id_buf[0] << std::endl;
         continue;
       }
+
+      std::cout << "[" << get_timestamp() << "] Received request for message ID:\t" << msg_id_buf[0] << std::endl;
 
       // packet dropped
       auto dropped = loss_dist(gen);
       if (!no_packet_drops && dropped) {
+        std::cout << "[" << get_timestamp() << "] Dropped request for message ID:\t" << msg_id_buf[0] << std::endl;
         continue;
       }
 
-      // also drop if already processing NUM_CHUNKS (10 requests)
-      if (delays.size() == NUM_CHUNKS) {
+      // drop if already processing NUM_CHUNKS (10 requests)
+      if (delays.size() >= NUM_CHUNKS) {
+        std::cout << "[" << get_timestamp() << "] Dropped request due to maximum concurrent requests limit" << std::endl;
         continue;
       }
 
