@@ -4,6 +4,7 @@
 #include <array>
 #include <asio.hpp>
 #include <mutex>
+#include <thread>
 using asio::ip::tcp;
 
 #define NUM_MSGS 854
