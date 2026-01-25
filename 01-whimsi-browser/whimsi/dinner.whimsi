@@ -1,0 +1,23 @@
+RECT 0 0 800 60 red
+TEXT 220 15 "Spaghetti and Meatballs" 26 white
+
+TEXT 50 100 "Ingredients:" 20 black
+TEXT 70 140 "- 1 lb spaghetti" 16 gray
+TEXT 70 170 "- 1 lb ground beef" 16 gray
+TEXT 70 200 "- 1 jar marinara sauce" 16 gray
+TEXT 70 230 "- 1 egg" 16 gray
+TEXT 70 260 "- Breadcrumbs" 16 gray
+TEXT 70 290 "- Parmesan cheese" 16 gray
+
+TEXT 400 100 "Instructions:" 20 black
+TEXT 420 140 "1. Mix beef, egg, breadcrumbs" 16 gray
+TEXT 420 170 "2. Form into meatballs" 16 gray
+TEXT 420 200 "3. Brown in pan" 16 gray
+TEXT 420 230 "4. Simmer in sauce" 16 gray
+TEXT 420 260 "5. Boil pasta al dente" 16 gray
+TEXT 420 290 "6. Top with parmesan!" 16 gray
+
+CIRCLE 650 450 30 red
+CIRCLE 680 480 25 red
+CIRCLE 620 470 28 red
+CLICK recipes.whimsi 50 550 "Back to Recipes" 18 blue

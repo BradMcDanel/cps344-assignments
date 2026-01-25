@@ -1,7 +1,7 @@
 TEXT 50 100 "Welcome to WhimsiWeb!" 24 black
 RECT 20 140 100 60 red
 CIRCLE 150 200 50 orange
-CAT 300 300 50
 ALIEN 400 300 50
 RAINBOW 500 300 50
 IMPORT cats.whimsi
+CLICK more_text.whimsi 25 500 "Click for more text..." 24 blue

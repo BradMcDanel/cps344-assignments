@@ -1,0 +1,20 @@
+TEXT 250 30 "Whimsi Recipe Book" 28 black
+
+RECT 50 80 300 80 pink
+TEXT 60 100 "Breakfast" 22 white
+CLICK breakfast.whimsi 60 130 "Fluffy Pancakes" 16 blue
+
+RECT 400 80 300 80 orange
+TEXT 410 100 "Lunch" 22 white
+CLICK lunch.whimsi 410 130 "Grilled Cheese" 16 blue
+
+RECT 50 200 300 80 red
+TEXT 60 220 "Dinner" 22 white
+CLICK dinner.whimsi 60 250 "Spaghetti" 16 blue
+
+RECT 400 200 300 80 purple
+TEXT 410 220 "Desserts" 22 white
+CLICK desserts.whimsi 410 250 "Chocolate Chip Cookies" 16 blue
+
+CAT 650 450 100
+CLICK more_cats.whimsi 750 550 "?" 12 gray

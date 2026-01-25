@@ -1,0 +1,19 @@
+RECT 0 0 800 60 orange
+TEXT 250 15 "Grilled Cheese" 26 white
+
+TEXT 50 100 "Ingredients:" 20 black
+TEXT 70 140 "- 2 slices bread" 16 gray
+TEXT 70 170 "- 2 slices cheddar" 16 gray
+TEXT 70 200 "- 2 tbsp butter" 16 gray
+TEXT 70 230 "- Optional: tomato" 16 gray
+
+TEXT 400 100 "Instructions:" 20 black
+TEXT 420 140 "1. Butter one side of each slice" 16 gray
+TEXT 420 170 "2. Place cheese between bread" 16 gray
+TEXT 420 200 "3. Grill butter-side down" 16 gray
+TEXT 420 230 "4. Flip when golden" 16 gray
+TEXT 420 260 "5. Cut diagonally and enjoy!" 16 gray
+
+RECT 600 400 100 80 yellow
+RECT 590 410 120 60 orange
+CLICK recipes.whimsi 50 550 "Back to Recipes" 18 blue

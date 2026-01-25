@@ -1,0 +1,23 @@
+RECT 0 0 800 60 purple
+TEXT 200 15 "Chocolate Chip Cookies" 26 white
+
+TEXT 50 100 "Ingredients:" 20 black
+TEXT 70 140 "- 2 cups flour" 16 gray
+TEXT 70 170 "- 1 cup butter" 16 gray
+TEXT 70 200 "- 1 cup sugar" 16 gray
+TEXT 70 230 "- 2 eggs" 16 gray
+TEXT 70 260 "- 1 cup chocolate chips" 16 gray
+TEXT 70 290 "- 1 tsp vanilla" 16 gray
+
+TEXT 400 100 "Instructions:" 20 black
+TEXT 420 140 "1. Cream butter and sugar" 16 gray
+TEXT 420 170 "2. Add eggs and vanilla" 16 gray
+TEXT 420 200 "3. Mix in flour" 16 gray
+TEXT 420 230 "4. Fold in chocolate chips" 16 gray
+TEXT 420 260 "5. Bake at 350F for 12 min" 16 gray
+TEXT 420 290 "6. Cool and enjoy!" 16 gray
+
+CIRCLE 620 420 40 orange
+CIRCLE 680 450 35 orange
+CIRCLE 650 500 38 orange
+CLICK recipes.whimsi 50 550 "Back to Recipes" 18 blue

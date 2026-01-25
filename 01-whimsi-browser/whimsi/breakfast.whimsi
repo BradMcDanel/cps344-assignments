@@ -1,0 +1,21 @@
+RECT 0 0 800 60 pink
+TEXT 250 15 "Fluffy Pancakes" 26 white
+
+TEXT 50 100 "Ingredients:" 20 black
+TEXT 70 140 "- 1 cup flour" 16 gray
+TEXT 70 170 "- 1 egg" 16 gray
+TEXT 70 200 "- 3/4 cup milk" 16 gray
+TEXT 70 230 "- 2 tbsp sugar" 16 gray
+TEXT 70 260 "- 1 tsp baking powder" 16 gray
+TEXT 70 290 "- Pinch of salt" 16 gray
+
+TEXT 400 100 "Instructions:" 20 black
+TEXT 420 140 "1. Mix dry ingredients" 16 gray
+TEXT 420 170 "2. Add egg and milk" 16 gray
+TEXT 420 200 "3. Whisk until smooth" 16 gray
+TEXT 420 230 "4. Pour onto hot griddle" 16 gray
+TEXT 420 260 "5. Flip when bubbly" 16 gray
+TEXT 420 290 "6. Serve with syrup!" 16 gray
+
+CIRCLE 650 450 60 yellow
+CLICK recipes.whimsi 50 550 "Back to Recipes" 18 blue
