@@ -1,5 +1,7 @@
-#include <inttypes.h>
 #include <asio.hpp>
+#include <array>
+#include <cstdint>
+#include <cstring>
 #include <ctime>
 #include <iostream>
 #include <string>
@@ -13,9 +15,7 @@ int main() {
   tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), 3000));
 
   // Use this bakery to handle queries from the client
-  Bakery bakery = text_deserializer("../data/bakery.txt");
-
-  uint16_t counter = 0;
+  Bakery bakery = text_deserializer("../data/small.txt");
 
   while (true) {
     // Wait for client
@@ -23,20 +23,21 @@ int main() {
     tcp::socket socket(io_context);
     acceptor.accept(socket);
 
-    std::array<uint8_t, 3> buf;
+    std::array<uint8_t, 3> request{};
     asio::error_code error;
-    size_t len = socket.read_some(asio::buffer(buf), error);
+    asio::read(socket, asio::buffer(request), error); // Read exactly 3 bytes
 
-    // Add x to counter (just an example, you should implement the protocol here!)
-    auto x = uint8_t(buf[0]);
-    counter += x;
-    std::cout << +x << " " << counter << std::endl;
+    if (error) {
+      std::cerr << "Read error: " << error.message() << std::endl;
+      continue;
+    }
 
-    buf.fill(0); // Clear buffer
+    // TODO: Unpack request bits and handle logic (see assignment PDF).
 
-    std::memcpy(&buf, &counter, sizeof(uint16_t)); // Copy counter to buffer
+    std::array<uint8_t, 2> response{};
+    // TODO: Pack 16-bit response (see assignment PDF for byte order).
 
-    asio::write(socket, asio::buffer(buf), error); // Send buffer back to client
+    asio::write(socket, asio::buffer(response), error); // Send exactly 2 bytes
   }
 
   return 0;
