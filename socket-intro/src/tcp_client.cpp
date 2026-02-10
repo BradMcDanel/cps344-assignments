@@ -14,11 +14,11 @@ int main(int argc, char *argv[]) {
   }
   auto host = argv[1];
   asio::error_code error;
-  std::array<uint32_t, 1> send;
-  std::array<uint32_t, 1> recv;
+  std::array<uint8_t, 1> send;
+  std::array<uint8_t, 1> recv;
   tcp::resolver::results_type endpoints = resolver.resolve(host, "3000");
   asio::connect(socket, endpoints);
-  for (int i = 0; i < 1024; ++i) {
+  for (int i = 0; i < 8; ++i) {
     send[0] = i;
     socket.send(asio::buffer(send), 0, error);
     size_t len = socket.read_some(asio::buffer(recv), error);
