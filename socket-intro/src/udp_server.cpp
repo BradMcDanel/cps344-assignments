@@ -11,8 +11,8 @@ int main() {
   asio::error_code error;
   std::array<uint8_t, 1> send;
   std::array<uint8_t, 1> recv;
+  udp::socket socket(io_context, udp::endpoint(udp::v4(), 3000));
   while (true) {
-    udp::socket socket(io_context, udp::endpoint(udp::v4(), 3000));
     udp::endpoint remote_endpoint;
     socket.receive_from(asio::buffer(recv), remote_endpoint);
     send[0] = recv[0] + 1;

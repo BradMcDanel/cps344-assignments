@@ -26,3 +26,11 @@ target_include_directories(tcp_server PRIVATE include)
 target_include_directories(tcp_server PRIVATE third_party/asio-1.18.0/include)
 target_link_libraries(tcp_server PRIVATE Threads::Threads)
 
+# Suppress ASIO header warning about null this in template checks.
+foreach(target udp_client udp_server tcp_client tcp_server)
+  target_compile_options(${target} PRIVATE
+    $<$<CXX_COMPILER_ID:GNU>:-Wno-nonnull>
+    $<$<CXX_COMPILER_ID:Clang>:-Wno-nonnull>
+    $<$<CXX_COMPILER_ID:AppleClang>:-Wno-nonnull>
+  )
+endforeach()

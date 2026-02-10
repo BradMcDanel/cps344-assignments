@@ -15,12 +15,16 @@ int main() {
   while (true) {
     tcp::socket socket(io_context);
     acceptor.accept(socket);
-    size_t len = socket.read_some(asio::buffer(recv), error);
-    send[0] = recv[0] + 1;
-    socket.send(asio::buffer(send), 0, error);
-    std::cout << "Received: " << +recv[0] << ", Sent: " << +send[0]
-              << std::endl;
-    // close the socket
+    for (;;) {
+      size_t len = socket.read_some(asio::buffer(recv), error);
+      if (error) {
+        break;
+      }
+      send[0] = recv[0] + 1;
+      socket.send(asio::buffer(send), 0, error);
+      std::cout << "Received: " << +recv[0] << ", Sent: " << +send[0]
+                << std::endl;
+    }
     socket.close();
   }
 

@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   std::array<uint8_t, 1> send;
   std::array<uint8_t, 1> recv;
 
-  for (int i = 0; i < 800; ++i) {
+  for (int i = 0; i < 1024; ++i) {
     udp::socket socket(io_context);
     socket.open(udp::v4());
     send[0] = i;
