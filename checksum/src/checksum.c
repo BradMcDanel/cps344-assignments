@@ -20,8 +20,7 @@ void print_packet(uint8_t *udp_packet, uint32_t len) {
 int main(void) {
   uint8_t udp_packet[21] = {0x0B, 0xB8, // Source Port (3000),
                             0x00, 0x50, // Destination Port (80),
-                            0x00,
-                            0x15, // Length (8 header + 13 data = 21 bytes)
+                            0x00, 0x15, // Length (8 header + 13 data = 21 bytes)
                             0x00, 0x00, // Checksum - needs to be calculated
                             // Data Portion - "Hello CPS344!"
                             0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x43, 0x50,
