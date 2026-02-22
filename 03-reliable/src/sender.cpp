@@ -1,5 +1,6 @@
 #include "sender.hpp"
 #include <chrono>
+#include <cstring>
 #include <iostream>
 using asio::ip::tcp;
 
@@ -24,15 +25,20 @@ Sender::Sender(asio::io_context& io_context,
       asio::error_code error;
       std::array<char, CHUNK_SIZE + 2> buf;
       buf.fill(' ');
-      size_t len = socket.read_some(asio::buffer(buf), error);
-      data_lock.lock();
+      asio::read(socket, asio::buffer(buf), error);
+      if (error) {
+        goto exit_thread;
+      }
+
+      std::lock_guard<std::mutex> lock(data_lock);
       if (num_msgs < data.size()) {
-        data[num_msgs].msg_id = *reinterpret_cast<uint16_t*>(&buf[0]);
-        data[num_msgs].data =
-            *reinterpret_cast<std::array<char, CHUNK_SIZE>*>(&buf[2]);
+        uint16_t msg_id = 0;
+        std::memcpy(&msg_id, buf.data(), sizeof(uint16_t));
+        data[num_msgs].msg_id = msg_id;
+        std::memcpy(data[num_msgs].data.data(), buf.data() + sizeof(uint16_t),
+                    CHUNK_SIZE);
         num_msgs++;
       }
-      data_lock.unlock();
     }
   exit_thread:;
   });
@@ -44,19 +50,22 @@ Sender::~Sender() {
 }
 
 bool Sender::data_ready() {
+  std::lock_guard<std::mutex> lock(data_lock);
   return num_msgs > 0;
 }
 
 Msg Sender::get_msg() {
-  if (!data_ready()) {
+  std::lock_guard<std::mutex> lock(data_lock);
+  if (num_msgs == 0) {
     std::cout << "Warning: no Msg instance available! Aborting." << std::endl;
     exit(1);
   }
 
-  data_lock.lock();
+  auto msg = data[0];
+  for (size_t i = 1; i < num_msgs; i++) {
+    data[i - 1] = data[i];
+  }
   num_msgs--;
-  auto msg = data[num_msgs];
-  data_lock.unlock();
   return msg;
 }
 

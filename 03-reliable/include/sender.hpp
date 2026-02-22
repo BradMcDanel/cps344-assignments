@@ -2,12 +2,13 @@
 #define _SENDER_H_
 
 #include <array>
+#include <atomic>
 #include <asio.hpp>
 #include <mutex>
 #include <thread>
 using asio::ip::tcp;
 
-#define NUM_MSGS 854
+#define NUM_MSGS 853
 #define CHUNK_SIZE 128
 #define NUM_CHUNKS 10
 
@@ -23,7 +24,7 @@ class Sender {
   std::thread _t;
   tcp::socket socket;
   size_t num_msgs;
-  bool finished;
+  std::atomic<bool> finished;
 
  public:
   Sender(asio::io_context&, std::string, std::string);
