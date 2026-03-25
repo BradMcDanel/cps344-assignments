@@ -11,15 +11,15 @@ def process_frame(src_mac, dst_mac, in_port):
 
 
 if __name__ == "__main__":
-    # A sends to B -- switch doesn't know B yet, should flood
+    # A sends to B, switch doesn't know B yet, should flood
     out = process_frame("MAC_A", "MAC_B", 0)
     print("A->B (port 0): " + str(out) + "  table: " + str(switch_table))
 
-    # B replies to A -- switch knows A (port 0), should unicast
+    # B replies to A, switch knows A (port 0), should unicast
     out = process_frame("MAC_B", "MAC_A", 2)
     print("B->A (port 2): " + str(out) + "  table: " + str(switch_table))
 
-    # C sends to B -- switch knows B (port 2), should unicast
+    # C sends to B, switch knows B (port 2), should unicast
     out = process_frame("MAC_C", "MAC_B", 1)
     print("C->B (port 1): " + str(out) + "  table: " + str(switch_table))
 
